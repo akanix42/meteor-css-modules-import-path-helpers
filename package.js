@@ -17,3 +17,7 @@ Package.onUse(function (api) {
 	api.addFiles('import-path-helpers.js');
 	api.export('ImportPathHelpers');
 });
+
+Npm.depends({
+	"xregexp": "3.0.0"
+});

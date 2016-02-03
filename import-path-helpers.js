@@ -1,3 +1,4 @@
+var XRegExp = Npm.require('xregexp');
 var path;
 
 ImportPathHelpers = {
@@ -11,6 +12,17 @@ ImportPathHelpers = {
 		}
 		return '{' + inputFile.getPackageName() + '}/'
 			+ inputFile.getPathInPackage();
+	},
+
+
+	getImportPathInBundle: function getAbsoluteImportPath(inputFile) {
+		var packageAndPathExpression = XRegExp('^(?<package>app|(packages/(.*?)))/(?<pathInPackage>.*)');
+		var inputFilePath = inputFile.getPathInBundle();
+		var packageAndPath = XRegExp.exec(inputFilePath, packageAndPathExpression);
+
+		var package = packageAndPath.package.replace(/^(app|packages\/)/, '');
+		console.log(`{${package}}/${packageAndPath.pathInPackage}`);
+		return `{${package}}/${packageAndPath.pathInPackage}`;
 	},
 
 
