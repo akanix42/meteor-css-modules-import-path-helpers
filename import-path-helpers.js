@@ -1,3 +1,5 @@
+const cjson = Npm.require('cjson');
+
 var path;
 
 ImportPathHelpers = {
@@ -15,8 +17,11 @@ ImportPathHelpers = {
 
 
 	getImportPathRelativeToFile: function getRealImportPath(importPath, relativeTo) {
-		importPath = importPath.replace(/^["']|["']$/g, "")
+		importPath = importPath.replace(/^["']|["']$/g, "");
 		var relativePath = relativeTo.replace(/(.*)\/.*/, '$1');
+		if (importPath[0] === '~')
+			return getModulePath(importPath.substring(1));
+
 		if (importPath[0] === '.')
 			importPath = path.join(relativePath, importPath);
 
@@ -25,6 +30,18 @@ ImportPathHelpers = {
 			importPath = importPath.substr(accPosition, importPath.length);
 
 		return importPath;
+
+
+		function getModulePath(importPath) {
+			const nodeModulesDir=`${process.cwd()}/node_modules`;
+			if (importPath.match(/\//))
+				return `${nodeModulesDir}/${importPath}`;
+
+			const modulePath = `${nodeModulesDir}/${importPath}`;
+			const mainFile = cjson.load(`${modulePath}/package.json`).main;
+			return `${modulePath}/${mainFile}`;
+		}
+
 	}
 
 

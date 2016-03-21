@@ -1,6 +1,6 @@
 Package.describe({
 	name: 'nathantreid:css-modules-import-path-helpers',
-	version: '0.0.1',
+	version: '0.0.2',
 	// Brief, one-line summary of the package.
 	summary: 'Helper Library for package file paths',
 	// URL to the Git repository containing the source code for this package.
@@ -16,4 +16,8 @@ Package.onUse(function (api) {
 	api.use('ecmascript');
 	api.addFiles('import-path-helpers.js');
 	api.export('ImportPathHelpers');
+});
+
+Npm.depends({
+	"cjson": "0.3.3",
 });
