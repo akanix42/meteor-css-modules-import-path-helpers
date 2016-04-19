@@ -11,14 +11,25 @@ function getBasePath(directory) {
 	if (fs.existsSync(path.join(directory, '.meteor'))) {
 		return directory;
 	}
-	return getBasePath(path.resolve(directory, '..'));
+	const pathAbove = path.resolve(directory, '..');
+	if (pathAbove === directory) {
+		console.warn('No .meteor directory found in the path tree; ImportPathHelpers.basePath must be set manually.');
+		return null;
+	}
+	return getBasePath(pathAbove);
 }
 
 ImportPathHelpers = {
 	init: function () {
 	},
 
-	basePath: basePath,
+	get basePath() {
+		return basePath;
+	},
+
+	set basePath(newPath) {
+		basePath = newPath;
+	},
 
 	getImportPathInPackage: function getImportPathInPackage(inputFile) {
 		if (inputFile.getPackageName() === null) {

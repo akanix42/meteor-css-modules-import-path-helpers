@@ -18,7 +18,15 @@ Package.onUse(function (api) {
 	api.export('ImportPathHelpers');
 });
 
+Package.onTest(function(api){
+api.use('nathantreid:css-modules-import-path-helpers');
+	api.use(['ecmascript', 'practicalmeteor:mocha@2.4.5_1']);
+
+	api.mainModule('tests.js')
+});
+
 Npm.depends({
 	"cjson": "0.3.3",
 	"path-is-absolute": "1.0.0",
+	"chai": "3.5.0"
 });
