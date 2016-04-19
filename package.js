@@ -20,4 +20,5 @@ Package.onUse(function (api) {
 
 Npm.depends({
 	"cjson": "0.3.3",
+	"path-is-absolute": "1.0.0",
 });

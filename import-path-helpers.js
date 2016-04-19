@@ -1,20 +1,42 @@
-const cjson = Npm.require('cjson');
+import cjson from 'cjson';
+import path from 'path';
+import pathIsAbsolute from 'path-is-absolute';
+import fs from 'fs';
 
-var path;
+if (!path.isAbsolute) path.isAbsolute = pathIsAbsolute;
+
+let basePath = getBasePath(process.cwd().replace(/\\/g, '/'));
+
+function getBasePath(directory) {
+	if (fs.existsSync(path.join(directory, '.meteor'))) {
+		return directory;
+	}
+	return getBasePath(path.resolve(directory, '..'));
+}
 
 ImportPathHelpers = {
-	init: function (plugin) {
-		path = plugin.path;
+	init: function () {
 	},
 
-	getImportPathInPackage: function getAbsoluteImportPath(inputFile) {
+	basePath: basePath,
+
+	getImportPathInPackage: function getImportPathInPackage(inputFile) {
 		if (inputFile.getPackageName() === null) {
-			return '{}/' + inputFile.getPathInPackage();
+			return path.join(basePath, inputFile.getPathInPackage()).replace(/\\/g, '/');
 		}
-		return '{' + inputFile.getPackageName() + '}/'
-			+ inputFile.getPathInPackage();
+		return path.join(basePath, 'packages', inputFile.getPackageName(), inputFile.getPathInPackage()).replace(/\\/g, '/');
 	},
 
+	getAbsoluteImportPath: function getAbsoluteImportPath(relativePath) {
+		if (path.isAbsolute(relativePath))
+			return relativePath.replace(/\\/g, '/');
+
+		return path.join(basePath, relativePath).replace(/\\/g, '/');
+	},
+
+	getAppRelativeImportPath: function getAppRelativeImportPath(absolutePath) {
+		return '/' + path.relative(basePath, absolutePath).replace(/\\/g, '/');
+	},
 
 	getImportPathRelativeToFile: function getRealImportPath(importPath, relativeTo) {
 		importPath = importPath.replace(/^["']|["']$/g, "");
@@ -29,11 +51,11 @@ ImportPathHelpers = {
 		if (accPosition > -1)
 			importPath = importPath.substr(accPosition, importPath.length);
 
-		return importPath;
+		return importPath.replace(/\\/g, '/');
 
 
 		function getModulePath(importPath) {
-			const nodeModulesDir=`${process.cwd()}/node_modules`;
+			const nodeModulesDir = `${process.cwd()}/node_modules`;
 			if (importPath.match(/\//))
 				return `${nodeModulesDir}/${importPath}`;
 
