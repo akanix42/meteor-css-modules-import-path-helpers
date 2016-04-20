@@ -36,4 +36,72 @@ describe('ImportPathHelpers', () => {
 		});
 
 	});
+
+	describe('getImportPathRelativeToFile', () => {
+
+		it('should return absolute path when supplied absolute path', () => {
+			const inputPath = 'C:/test/hello';
+			const relativeTo = 'C:/test/other';
+			ImportPathHelpers.basePath = 'C:/test';
+			const outputPath = ImportPathHelpers.getImportPathRelativeToFile(inputPath, relativeTo);
+			outputPath.should.equal('C:/test/hello');
+		});
+
+		it('should return absolute path to file in same directory', () => {
+			const inputPath = './hello';
+			const relativeTo = 'C:/test/other';
+			ImportPathHelpers.basePath = 'C:/test';
+			const outputPath = ImportPathHelpers.getImportPathRelativeToFile(inputPath, relativeTo);
+			outputPath.should.equal('C:/test/hello');
+		});
+
+		it('should return absolute path to file in parent directory', () => {
+			const inputPath = '../hello';
+			const relativeTo = 'C:/test/other';
+			ImportPathHelpers.basePath = 'C:/test';
+			const outputPath = ImportPathHelpers.getImportPathRelativeToFile(inputPath, relativeTo);
+			outputPath.should.equal('C:/hello');
+		});
+
+		it('should return absolute path to file in child directory', () => {
+			const inputPath = './world/hello';
+			const relativeTo = 'C:/test/other';
+			ImportPathHelpers.basePath = 'C:/test';
+			const outputPath = ImportPathHelpers.getImportPathRelativeToFile(inputPath, relativeTo);
+			outputPath.should.equal('C:/test/world/hello');
+		});
+
+		it('should return absolute path to node modules file', () => {
+			const inputPath = '~world/hello';
+			const relativeTo = 'C:/test/other';
+			ImportPathHelpers.basePath = 'C:/test';
+			const outputPath = ImportPathHelpers.getImportPathRelativeToFile(inputPath, relativeTo);
+			outputPath.should.equal('C:/test/node_modules/world/hello');
+		});
+
+		it('should return absolute path to curly-syntax non-package path', () => {
+			const inputPath = '{}/world/hello';
+			const relativeTo = 'C:/test/other';
+			ImportPathHelpers.basePath = 'C:/test';
+			const outputPath = ImportPathHelpers.getImportPathRelativeToFile(inputPath, relativeTo);
+			outputPath.should.equal('C:/test/world/hello');
+		});
+
+		it('should return absolute path to curly-syntax package path without colon', () => {
+			const inputPath = '{my_package}/world/hello';
+			const relativeTo = 'C:/test/other';
+			ImportPathHelpers.basePath = 'C:/test';
+			const outputPath = ImportPathHelpers.getImportPathRelativeToFile(inputPath, relativeTo);
+			outputPath.should.equal('C:/test/packages/my_package/world/hello');
+		});
+
+		it('should return absolute path to curly-syntax package path without colon', () => {
+			const inputPath = '{my:package}/world/hello';
+			const relativeTo = 'C:/test/other';
+			ImportPathHelpers.basePath = 'C:/test';
+			const outputPath = ImportPathHelpers.getImportPathRelativeToFile(inputPath, relativeTo);
+			outputPath.should.equal('C:/test/packages/my_package/world/hello');
+		});
+
+	});
 });

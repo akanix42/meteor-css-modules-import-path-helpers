@@ -14,15 +14,15 @@ Package.onUse(function (api) {
 	api.versionsFrom('1.2.0.1');
 
 	api.use('ecmascript');
-	api.addFiles('import-path-helpers.js');
-	api.export('ImportPathHelpers');
+	api.addFiles('import-path-helpers.js', 'server');
+	api.export('ImportPathHelpers', 'server');
 });
 
 Package.onTest(function(api){
 api.use('nathantreid:css-modules-import-path-helpers');
 	api.use(['ecmascript', 'practicalmeteor:mocha@2.4.5_1']);
 
-	api.mainModule('tests.js')
+	api.mainModule('tests.js', 'server')
 });
 
 Npm.depends({

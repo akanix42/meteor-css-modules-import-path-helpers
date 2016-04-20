@@ -58,15 +58,13 @@ ImportPathHelpers = {
 		if (importPath[0] === '.')
 			importPath = path.join(relativePath, importPath);
 
-		let accPosition = importPath.indexOf('{');
-		if (accPosition > -1)
-			importPath = importPath.substr(accPosition, importPath.length);
+		importPath = convertCurlySyntaxToAbsolutePath(importPath);
 
 		return importPath.replace(/\\/g, '/');
 
 
 		function getModulePath(importPath) {
-			const nodeModulesDir = `${process.cwd()}/node_modules`;
+			const nodeModulesDir = `${basePath}/node_modules`;
 			if (importPath.match(/\//))
 				return `${nodeModulesDir}/${importPath}`;
 
@@ -75,6 +73,17 @@ ImportPathHelpers = {
 			return `${modulePath}/${mainFile}`;
 		}
 
+		function convertCurlySyntaxToAbsolutePath(importPath) {
+			let accPosition = importPath.indexOf('{');
+			if (accPosition === -1)
+				return importPath;
+
+			importPath = importPath.substr(accPosition, importPath.length);
+			if (importPath.indexOf('{}') === 0)
+				return path.join(basePath, importPath.substring(2));
+
+			return path.join(basePath, 'packages/' + importPath.replace(/\{(.*?):(.*?)}/, '$1_$2').replace(/\{(.*?)}/, '$1'));
+		}
 	}
 
 
