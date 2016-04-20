@@ -1,0 +1,57 @@
+{
+  "dependencies": {
+    "chai": {
+      "version": "3.5.0",
+      "resolved": "https://registry.npmjs.org/chai/-/chai-3.5.0.tgz",
+      "from": "chai@3.5.0",
+      "dependencies": {
+        "assertion-error": {
+          "version": "1.0.1",
+          "resolved": "https://registry.npmjs.org/assertion-error/-/assertion-error-1.0.1.tgz",
+          "from": "assertion-error@>=1.0.1 <2.0.0"
+        },
+        "deep-eql": {
+          "version": "0.1.3",
+          "resolved": "https://registry.npmjs.org/deep-eql/-/deep-eql-0.1.3.tgz",
+          "from": "deep-eql@>=0.1.3 <0.2.0",
+          "dependencies": {
+            "type-detect": {
+              "version": "0.1.1",
+              "resolved": "https://registry.npmjs.org/type-detect/-/type-detect-0.1.1.tgz",
+              "from": "type-detect@0.1.1"
+            }
+          }
+        },
+        "type-detect": {
+          "version": "1.0.0",
+          "resolved": "https://registry.npmjs.org/type-detect/-/type-detect-1.0.0.tgz",
+          "from": "type-detect@>=1.0.0 <2.0.0"
+        }
+      }
+    },
+    "cjson": {
+      "version": "0.3.3",
+      "resolved": "https://registry.npmjs.org/cjson/-/cjson-0.3.3.tgz",
+      "from": "https://registry.npmjs.org/cjson/-/cjson-0.3.3.tgz",
+      "dependencies": {
+        "json-parse-helpfulerror": {
+          "version": "1.0.3",
+          "resolved": "https://registry.npmjs.org/json-parse-helpfulerror/-/json-parse-helpfulerror-1.0.3.tgz",
+          "from": "https://registry.npmjs.org/json-parse-helpfulerror/-/json-parse-helpfulerror-1.0.3.tgz",
+          "dependencies": {
+            "jju": {
+              "version": "1.3.0",
+              "resolved": "https://registry.npmjs.org/jju/-/jju-1.3.0.tgz",
+              "from": "https://registry.npmjs.org/jju/-/jju-1.3.0.tgz"
+            }
+          }
+        }
+      }
+    },
+    "path-is-absolute": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.0.tgz",
+      "from": "https://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.0.tgz"
+    }
+  }
+}
