@@ -55,6 +55,10 @@ ImportPathHelpers = {
 		if (importPath[0] === '~')
 			return getModulePath(importPath.substring(1));
 
+		// Fix relative paths that don't start with ./
+		if (['.', '/', '~', '{'].indexOf(importPath[0]) === -1 && !importPath.match(/^[A-Za-z]:/))
+			importPath = './' + importPath;
+
 		if (importPath[0] === '.')
 			importPath = path.join(relativePath, importPath);
 

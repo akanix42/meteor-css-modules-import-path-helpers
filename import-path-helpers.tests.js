@@ -55,6 +55,14 @@ describe('ImportPathHelpers', () => {
 			outputPath.should.equal('C:/test/hello');
 		});
 
+		it('should return absolute path to file in same directory without ./', () => {
+			const inputPath = 'hello';
+			const relativeTo = 'C:/test/other';
+			ImportPathHelpers.basePath = 'C:/test';
+			const outputPath = ImportPathHelpers.getImportPathRelativeToFile(inputPath, relativeTo);
+			outputPath.should.equal('C:/test/hello');
+		});
+
 		it('should return absolute path to file in parent directory', () => {
 			const inputPath = '../hello';
 			const relativeTo = 'C:/test/other';
