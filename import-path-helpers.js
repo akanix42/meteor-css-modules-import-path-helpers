@@ -35,7 +35,7 @@ ImportPathHelpers = {
 		if (inputFile.getPackageName() === null) {
 			return path.join(basePath, inputFile.getPathInPackage()).replace(/\\/g, '/');
 		}
-		return path.join(basePath, 'packages', inputFile.getPackageName(), inputFile.getPathInPackage()).replace(/\\/g, '/');
+		return path.join(basePath, 'packages', inputFile.getPackageName().replace(':', '_'), inputFile.getPathInPackage()).replace(/\\/g, '/');
 	},
 
 	getAbsoluteImportPath: function getAbsoluteImportPath(relativePath) {
